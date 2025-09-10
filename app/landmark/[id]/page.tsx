@@ -12,10 +12,9 @@ import MapLandmark from "@/components/map/MapLandmark"
 import ShareButton from "@/components/home/landmark/ShareButton"
 
 const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
-    const { id } = await params
+    const { id } = params
     const landmark = await fetchLandmarkDetail({ id })
     if (!landmark) redirect("/")
-
     const { name, description, price, province, category, image ,lat, lng} =
         landmark as LandmarkCardProps
     return (

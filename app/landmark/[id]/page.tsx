@@ -11,20 +11,12 @@ import { SkeletonDetail } from "@/components/home/landmark/LoadingCard"
 import MapLandmark from "@/components/map/MapLandmark"
 import ShareButton from "@/components/home/landmark/ShareButton"
 
-type Props = {
-  params: {
-    id: string
-  }
-}
-
-export default async function LandmarkDetail({ params }: Props) {
-  const id = params.id
+export default async function LandmarkDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  //console.log(params)
   const landmark = await fetchLandmarkDetail({ id })
   if (!landmark) redirect("/")
-
-  const { name, description, price, province, category, image, lat, lng } =
-    landmark as LandmarkCardProps
-
+  const { name, description, price, province, category, image, lat, lng } = landmark as LandmarkCardProps
   return (
     <section>
       {/* breadcrumb */}
@@ -80,3 +72,4 @@ export default async function LandmarkDetail({ params }: Props) {
     </section>
   )
 }
+// export default LandmarkDetail; // Already exported above as default function

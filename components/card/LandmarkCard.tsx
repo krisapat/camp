@@ -2,7 +2,6 @@ import { LandmarkCardProps } from "@/utils/type"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { MapPin, Tag } from "lucide-react"
-import LandmarkRating from "./LandmarkRating"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import FavoriteToggleButton from "./FavoriteToggleButton"
 import Link from "next/link"
@@ -44,8 +43,6 @@ const LandmarkCard = ({ landmark }: { landmark: LandmarkCardProps }) => {
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
-
-                            <LandmarkRating />
                         </div>
 
                         {/* description: 2 บรรทัดแล้ว ... */}

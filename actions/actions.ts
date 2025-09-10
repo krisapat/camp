@@ -7,6 +7,7 @@ import { redirect } from "next/navigation"
 import { uploadFile } from "@/utils/supabase"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
+
 // helper function to get authenticated user
 const getAuthUser = async () => {
   const user = await currentUser()
@@ -77,7 +78,7 @@ export const createLandmarkAction = async (
   }
 }
 
-export const fetchLandmarks = cache(async ({ search = "", category }: { search?: string, category?: string }) => {
+export const fetchLandmarks = async ({ search = "", category }: { search?: string, category?: string }) => {
   const landmarks = await db.landmark.findMany({
     where: {
       category,
@@ -90,7 +91,7 @@ export const fetchLandmarks = cache(async ({ search = "", category }: { search?:
     orderBy: { createdAt: "desc" },
   })
   return landmarks
-})
+}
 
 export const fetchLandmarksSwiper = cache(async () => {
   const landmarks = await db.landmark.findMany({
@@ -139,13 +140,6 @@ export const fetchFavorites = async () => {
   return favorites.map((favorite) => favorite.landmark)
 }
 
-export const fetchLandmarkDetail = async ({ id }: { id: string }) => {
-  return db.landmark.findFirst({
-    where: { id },
-    include: { profile: true },
-  })
-}
-
 export const toggleFavoriteAction = async (
   { favoriteID, landmarkId, pathname }: { favoriteID: string | null; landmarkId: string; pathname: string },
   _prevState: FormState,
@@ -168,3 +162,9 @@ export const toggleFavoriteAction = async (
   }
 }
 
+export const fetchLandmarkDetail = cache(async ({ id }: { id: string }) => {
+  return db.landmark.findFirst({
+    where: { id },
+    include: { profile: true },
+  })
+})

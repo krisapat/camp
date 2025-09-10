@@ -5,8 +5,6 @@ export const metadata: Metadata = {
   description: "Favorite your camping",
 };
 const Page = async ({ searchParams }:{ searchParams: Promise<{ search?: string, category?: string }> }) => {
-  // Search
-  console.log(searchParams)
   const { search, category } = await searchParams
   return (
     <section>

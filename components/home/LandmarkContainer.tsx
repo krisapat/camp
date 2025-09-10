@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import LoadingCard from "../card/LoadingCard";
 import CategoriesList from "./CategoriesList";
 import LoadingHero from "./hero/LoadingHero";
+import Search from "./Search";
 
 
 const LandmarkContainer = async ({ search, category }: { search?: string, category?: string }) => {
@@ -13,6 +14,7 @@ const LandmarkContainer = async ({ search, category }: { search?: string, catego
   const landmarksSwiper: LandmarkCardProps[] = await fetchLandmarksSwiper();
   return (
     <div className="space-y-4">
+      <Search />
       <Suspense fallback={<LoadingHero />}>
         <Hero landmark={landmarksSwiper} />
       </Suspense>

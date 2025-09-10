@@ -11,7 +11,7 @@ import { SkeletonDetail } from "@/components/home/landmark/LoadingCard"
 import MapLandmark from "@/components/map/MapLandmark"
 import ShareButton from "@/components/home/landmark/ShareButton"
 
-export default async function LandmarkDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function LandmarkDetail({ params }: { params: { id: string } }) {
   const { id } = await params
   //console.log(params)
   const landmark = await fetchLandmarkDetail({ id })

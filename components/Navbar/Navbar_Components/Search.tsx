@@ -1,28 +1,29 @@
 'use client'
+
 import { Input } from "@/components/ui/input"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDebouncedCallback } from 'use-debounce';
 
 const Search = () => {
-  const searchParams = useSearchParams()
-  const { replace } = useRouter()
-  const [search, setSearch] = useState(searchParams.get("search")?.toString() || "")
-  const handleSearch = useDebouncedCallback((value: string) => {
-    const params = new URLSearchParams(searchParams)
-    if (value) {
-      params.set("search", value)
-    } else {
-      params.delete("search")
-    }
-    replace(`?${params.toString()}`)
-  }, 500)
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [search, setSearch] = useState(searchParams.get("search") || "");
 
-  useEffect(() => {
-    if (!searchParams.get("search")) {
-      setSearch("")
+  const handleSearch = useDebouncedCallback((value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set("search", value);
+    } else {
+      params.delete("search");
     }
-  }, [searchParams.get("search")])
+    router.replace(`?${params.toString()}`);
+  }, 500);
+
+  const searchQuery = searchParams.get("search") || "";
+  useEffect(() => {
+    setSearch(searchQuery);
+  }, [searchQuery]);
 
   return (
     <Input
@@ -30,11 +31,12 @@ const Search = () => {
       placeholder="Search..."
       className="max-w-2xl"
       onChange={(e) => {
-        setSearch(e.target.value)
-        handleSearch(e.target.value)
+        setSearch(e.target.value);
+        handleSearch(e.target.value);
       }}
       value={search}
     />
-  )
+  );
 }
-export default Search
+
+export default Search;

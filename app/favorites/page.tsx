@@ -12,9 +12,12 @@ const FavoritePage = async () => {
   )
 
   return (
-    <Suspense fallback={<LoadingCard />}>
-      <LandmarkList landmarks={favorites} favoritesMap={favoritesMap} />
-    </Suspense>
+    <div className="space-y-4">
+      <h1 className="text-3xl">รายการที่ถูกใจ</h1>
+      <Suspense fallback={<LoadingCard />}>
+        <LandmarkList landmarks={favorites} favoritesMap={favoritesMap} />
+      </Suspense>
+    </div>
   )
 }
 

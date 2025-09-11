@@ -7,6 +7,7 @@ import LoadingCard from "../card/LoadingCard"
 import CategoriesList from "./CategoriesList"
 import LoadingHero from "./hero/LoadingHero"
 import Search from "./Search"
+import BreadcrumbHome from "./BreadcrumbHome"
 
 const LandmarkContainer = async ({
   search,
@@ -31,7 +32,10 @@ const LandmarkContainer = async ({
 
   return (
     <div className="space-y-4">
-      <Search />
+      <BreadcrumbHome />
+      <div className="sticky bg-white dark:bg-black max-w-md mx-auto w-full rounded-md top-4 z-50">
+        <Search />
+      </div>
       <Suspense fallback={<LoadingHero />}>
         <Hero landmark={landmarksSwiper} />
       </Suspense>

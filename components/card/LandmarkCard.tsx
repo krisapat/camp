@@ -13,7 +13,7 @@ const LandmarkCard = (
   return (
     <article className="group relative">
       <Link href={`/landmark/${id}`}>
-        <Card className="overflow-hidden rounded-md border border-white/20 h-95 p-0 shadow-md 
+        <Card className="overflow-hidden rounded-md h-95 p-0 shadow-md 
                 transition-all hover:scale-[1.03] hover:shadow-2xl duration-300
         ">
           <div className="relative h-full w-full">
@@ -27,7 +27,7 @@ const LandmarkCard = (
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
           </div>
 
-          <CardContent className="absolute bottom-0 w-full z-10 p-4 text-white backdrop-blur-sm bg-white/10">
+          <CardContent className="absolute bottom-0 right-0 left-0 w-full z-10 p-4 text-white backdrop-blur-sm bg-white/10 rounded-b-md">
             <div className="flex justify-between items-start gap-2">
               <TooltipProvider>
                 <Tooltip>

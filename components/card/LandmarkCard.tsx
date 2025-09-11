@@ -62,7 +62,7 @@ const LandmarkCard = ({ landmark }: { landmark: LandmarkCardProps }) => {
                 </Card>
             </Link>
             <div className="absolute top-1 right-1">
-                <FavoriteToggleButton landmarkId={id} />
+                <FavoriteToggleButton landmarkId={id}/>
             </div>
         </article>
     )

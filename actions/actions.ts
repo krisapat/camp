@@ -9,12 +9,12 @@ import { revalidatePath } from "next/cache"
 import { cache } from "react"
 
 // helper function to get authenticated user
-const getAuthUser = async () => {
-  const user = await currentUser()
-  if (!user) throw new Error("User not authenticated")
-  if (!user.privateMetadata.hasProfile) redirect("/profile/create")
-  return user
-}
+export const getAuthUser = cache(async () => {
+  const user = await currentUser();
+  if (!user) throw new Error("User not authenticated");
+  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
+  return user;
+});
 
 // validation schema
 export type FormState = { message: string, success?: boolean }
@@ -92,14 +92,6 @@ export const fetchLandmarks = async ({ search = "", category }: { search?: strin
   })
   return landmarks
 }
-
-export const fetchLandmarksSwiper = cache(async () => {
-  const landmarks = await db.landmark.findMany({
-    take: 10,
-    orderBy: { createdAt: "desc" },
-  })
-  return landmarks
-})
 
 export const fetchFavoriteId = async ({ landmarkId }: { landmarkId: string }) => {
   const user = await getAuthUser()

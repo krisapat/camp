@@ -1,4 +1,4 @@
-import { fetchLandmarks, fetchLandmarksSwiper } from "@/actions/actions";
+import { fetchLandmarks } from "@/actions/actions";
 import LandmarkList from "./LandmarkList";
 import { LandmarkCardProps } from "@/utils/type";
 import Hero from "./hero/Hero";
@@ -11,7 +11,8 @@ import Search from "./Search";
 
 const LandmarkContainer = async ({ search, category }: { search?: string, category?: string }) => {
   const landmarks: LandmarkCardProps[] = await fetchLandmarks({ search, category });
-  const landmarksSwiper: LandmarkCardProps[] = await fetchLandmarksSwiper();
+  const landmarksSwiper: LandmarkCardProps[] = landmarks.slice(0, 10);
+
   return (
     <div className="space-y-4">
       <Search />
@@ -23,6 +24,6 @@ const LandmarkContainer = async ({ search, category }: { search?: string, catego
         <LandmarkList landmarks={landmarks} />
       </Suspense>
     </div>
-  )
-}
-export default LandmarkContainer
+  );
+};
+export default LandmarkContainer;

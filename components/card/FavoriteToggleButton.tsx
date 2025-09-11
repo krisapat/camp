@@ -1,14 +1,17 @@
-import { auth } from '@clerk/nextjs/server'
 import { SignInCardButton } from "../Form/SubmitButtons"
-import { fetchFavoriteId } from "@/actions/actions"
 import FavoriteToggleForm from "./FavoriteToggleForm"
+import { auth } from "@clerk/nextjs/server"
 
-
-
-const FavoriteToggleButton = async ({ landmarkId }: { landmarkId: string }) => {
+const FavoriteToggleButton = async ({
+  landmarkId,
+  favoriteID,
+}: {
+  landmarkId: string
+  favoriteID: string | null
+}) => {
   const { userId } = await auth()
   if (!userId) return <SignInCardButton />
-  const favoriteID = await fetchFavoriteId({ landmarkId })
+
   return (
     <FavoriteToggleForm
       favoriteID={favoriteID}
@@ -16,4 +19,5 @@ const FavoriteToggleButton = async ({ landmarkId }: { landmarkId: string }) => {
     />
   )
 }
+
 export default FavoriteToggleButton

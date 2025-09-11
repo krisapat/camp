@@ -78,7 +78,17 @@ export const createLandmarkAction = async (
   }
 }
 
-export const fetchLandmarks = async ({ search = "", category }: { search?: string, category?: string }) => {
+export const fetchLandmarks = async ({
+  search = "",
+  category,
+  take = 20,   // จำนวนรายการต่อหน้า
+  skip = 0     // ข้ามกี่รายการ
+}: {
+  search?: string
+  category?: string
+  take?: number
+  skip?: number
+}) => {
   const landmarks = await db.landmark.findMany({
     where: {
       category,
@@ -89,23 +99,24 @@ export const fetchLandmarks = async ({ search = "", category }: { search?: strin
       ]
     },
     orderBy: { createdAt: "desc" },
+    take,
+    skip,
   })
-  return landmarks
-}
 
-export const fetchFavoriteId = async ({ landmarkId }: { landmarkId: string }) => {
-  const user = await getAuthUser()
-  const favorite = await db.favorite.findFirst({
+  const total = await db.landmark.count({
     where: {
-      landmarkId: landmarkId,
-      profileId: user.id
-    },
-    select: {
-      id: true
+      category,
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+        { province: { contains: search, mode: "insensitive" } },
+      ]
     }
   })
-  return favorite?.id || null
+
+  return { landmarks, total }
 }
+
 
 export const fetchFavorites = async () => {
   const user = await getAuthUser()
@@ -160,3 +171,15 @@ export const fetchLandmarkDetail = cache(async ({ id }: { id: string }) => {
     include: { profile: true },
   })
 })
+
+export const fetchFavoritesMap = async () => {
+  const user = await getAuthUser()
+  const favorites = await db.favorite.findMany({
+    where: { profileId: user.id },
+    select: { landmarkId: true, id: true }
+  })
+
+  return Object.fromEntries(
+    favorites.map(fav => [fav.landmarkId, fav.id])
+  )
+}

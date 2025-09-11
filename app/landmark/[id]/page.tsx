@@ -1,4 +1,4 @@
-import { fetchLandmarkDetail } from "@/actions/actions"
+import { fetchFavoritesMap, fetchLandmarkDetail } from "@/actions/actions"
 import Breadcrums from "@/components/home/landmark/Breadcrums"
 import { LandmarkCardProps } from "@/utils/type"
 import { redirect } from "next/navigation"
@@ -16,6 +16,8 @@ export default async function LandmarkDetail({ params }: { params: Promise<{ id:
   //console.log(params)
   const landmark = await fetchLandmarkDetail({ id })
   if (!landmark) redirect("/")
+  const favoritesMap = await fetchFavoritesMap()
+  const favoriteID = favoritesMap[id] || null
   const { name, description, price, province, category, image, lat, lng } = landmark as LandmarkCardProps
   return (
     <section>
@@ -42,7 +44,7 @@ export default async function LandmarkDetail({ params }: { params: Promise<{ id:
                   <CardTitle className="text-3xl font-bold">{name}</CardTitle>
                   <div className="flex space-x-2">
                     <ShareButton landmarkId={id} name={name} />
-                    <FavoriteToggleButton landmarkId={id} />
+                     <FavoriteToggleButton landmarkId={id} favoriteID={favoriteID}/>
                   </div>
                 </CardHeader>
 

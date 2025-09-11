@@ -3,8 +3,8 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { MapPin, Tag } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import FavoriteToggleForm from "./FavoriteToggleForm"
 import Link from "next/link"
+import FavoriteToggleButton from "./FavoriteToggleButton"
 
 const LandmarkCard = (
   { landmark, favoriteID }: { landmark: LandmarkCardProps, favoriteID: string | null }
@@ -59,7 +59,7 @@ const LandmarkCard = (
         </Card>
       </Link>
       <div className="absolute top-1 right-1">
-        <FavoriteToggleForm landmarkId={id} favoriteID={favoriteID} />
+        <FavoriteToggleButton landmarkId={id} favoriteID={favoriteID}/>
       </div>
     </article>
   )

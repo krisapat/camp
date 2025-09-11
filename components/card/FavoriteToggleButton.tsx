@@ -1,10 +1,11 @@
+// FavoriteToggleButton.tsx
 import { SignInCardButton } from "../Form/SubmitButtons"
 import FavoriteToggleForm from "./FavoriteToggleForm"
 import { auth } from "@clerk/nextjs/server"
 
 const FavoriteToggleButton = async ({
   landmarkId,
-  favoriteID,
+  favoriteID
 }: {
   landmarkId: string
   favoriteID: string | null

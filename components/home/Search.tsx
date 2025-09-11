@@ -26,16 +26,16 @@ const Search = () => {
   }, [searchQuery]);
 
   return (
-    <Input
-      type="text"
-      placeholder="Search..."
-      className="max-w-2xl"
-      onChange={(e) => {
-        setSearch(e.target.value);
-        handleSearch(e.target.value);
-      }}
-      value={search}
-    />
+      <Input
+        type="text"
+        placeholder="Search..."
+        className="w-full"
+        onChange={(e) => {
+          setSearch(e.target.value);
+          handleSearch(e.target.value);
+        }}
+        value={search}
+      />
   );
 }
 

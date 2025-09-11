@@ -7,14 +7,21 @@ import { redirect } from "next/navigation"
 import { uploadFile } from "@/utils/supabase"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
+import type { User } from '@clerk/nextjs/server';
 
 // helper function to get authenticated user
-const getAuthUser = async () => {
-  const user = await currentUser()
-  if (!user) throw new Error("User not authenticated")
-  if (!user.privateMetadata.hasProfile) redirect("/profile/create")
-  return user
-}
+let cachedUser: User | null = null;
+
+export const getAuthUser = async (): Promise<User> => {
+  if (cachedUser) return cachedUser;
+
+  const user = await currentUser();
+  if (!user) throw new Error("User not authenticated");
+  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
+
+  cachedUser = user;
+  return user;
+};
 
 // validation schema
 export type FormState = { message: string, success?: boolean }
@@ -92,14 +99,6 @@ export const fetchLandmarks = async ({ search = "", category }: { search?: strin
   })
   return landmarks
 }
-
-export const fetchLandmarksSwiper = cache(async () => {
-  const landmarks = await db.landmark.findMany({
-    take: 10,
-    orderBy: { createdAt: "desc" },
-  })
-  return landmarks
-})
 
 export const fetchFavoriteId = async ({ landmarkId }: { landmarkId: string }) => {
   const user = await getAuthUser()

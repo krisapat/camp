@@ -49,4 +49,6 @@ model Favorite {
 
   landmark   Landmark @relation(fields: [landmarkId], references: [id], onDelete: Cascade)
   landmarkId String
+
+  @@unique([profileId, landmarkId], name: "profile_landmark")
 }

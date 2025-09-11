@@ -1,5 +1,5 @@
 import { LandmarkCardProps } from "@/utils/type"
-import LandmarkCard from "../card/LandmarkCard"
+import LandmarkCard from "../cards/LandmarkCard"
 
 const LandmarkList = (
   { landmarks, favoritesMap }: { landmarks: LandmarkCardProps[], favoritesMap: Record<string, string> }

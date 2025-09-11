@@ -15,7 +15,6 @@ export const getAuthUser = cache(async () => {
   if (!user.privateMetadata.hasProfile) redirect("/profile/create");
   return user;
 });
-
 // validation schema
 export type FormState = { message: string, success?: boolean }
 const renderError = (error: unknown): FormState => {
@@ -116,7 +115,6 @@ export const fetchLandmarks = async ({
 
   return { landmarks, total }
 }
-
 
 export const fetchFavorites = async () => {
   const user = await getAuthUser()

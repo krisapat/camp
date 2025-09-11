@@ -1,5 +1,5 @@
 import { fetchFavorites } from "@/actions/actions"
-import LoadingCard from "@/components/card/LoadingCard"
+import LoadingCard from "@/components/cards/LoadingCard"
 import LandmarkList from "@/components/home/LandmarkList"
 import { Suspense } from "react"
 

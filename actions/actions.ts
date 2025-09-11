@@ -7,21 +7,14 @@ import { redirect } from "next/navigation"
 import { uploadFile } from "@/utils/supabase"
 import { revalidatePath } from "next/cache"
 import { cache } from "react"
-import type { User } from '@clerk/nextjs/server';
 
 // helper function to get authenticated user
-let cachedUser: User | null = null;
-
-export const getAuthUser = async (): Promise<User> => {
-  if (cachedUser) return cachedUser;
-
+export const getAuthUser = cache(async () => {
   const user = await currentUser();
   if (!user) throw new Error("User not authenticated");
   if (!user.privateMetadata.hasProfile) redirect("/profile/create");
-
-  cachedUser = user;
   return user;
-};
+});
 
 // validation schema
 export type FormState = { message: string, success?: boolean }
